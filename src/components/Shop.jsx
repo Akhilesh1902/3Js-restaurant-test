@@ -1,9 +1,27 @@
 import React, { useRef } from "react"
 import { useLoader } from "@react-three/fiber"
+import { Sphere, useHelper } from "@react-three/drei"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
+import { PointLightHelper } from "three"
 
 const Shop = () => {
-  const shop = useLoader(GLTFLoader, "/restaurant.glb")
+  const shop = useLoader(
+    GLTFLoader,
+    "/draco-Restaurant.glb",
+    (loader) => {
+      const dracoLoader = new DRACOLoader()
+      dracoLoader.setDecoderPath("/gltf/")
+      loader.setDRACOLoader(dracoLoader)
+      console.log(loader)
+    },
+    (porgress) => {
+      console.log(porgress)
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
   //   shop.materials.WindowLightBlu.color.set(0, 0, 0)
   //   shop.materials.WindowLightPik.color.set(0, 0, 0)
   //   shop.materials.WindowLightPik.color = { r: 0, g: 0, b: 0 }
@@ -19,14 +37,13 @@ const Shop = () => {
 
   // shop.scene.castShadow = true
   // shop.scene.receiveShadow = true
-  console.log(shop)
 
   const pointLightRef = useRef()
   const pointLightRef2 = useRef()
   const pointLightRef3 = useRef()
 
-  //   useHelper(pointLightRef, PointLightHelper, 0.5, "blue")
-  //   useHelper(pointLightRef2, PointLightHelper, 0.5, "blue")
+  // useHelper(pointLightRef, PointLightHelper, 0.5, "blue")
+  // useHelper(pointLightRef2, PointLightHelper, 0.5, "blue")
   // useHelper(pointLightRef3, PointLightHelper, 0.5, "blue")
 
   return (
@@ -36,24 +53,30 @@ const Shop = () => {
         decay={2}
         distance={5}
         ref={pointLightRef}
-        position={[-3, 2.5, 3.5]}
+        position={[-3, 3, 3]}
         color={"hotpink"}
       />
+      <Sphere args={[0.2]} position={[-3, 3, 3]}>
+        <meshBasicMaterial color={"hotpink"} />
+      </Sphere>
       <pointLight
         intensity={2}
         decay={2}
         distance={5}
         ref={pointLightRef2}
-        position={[3.3, 2.6, 2.9]}
+        position={[3.3, 3.1, 2.7]}
         color={"hotpink"}
       />
+      <Sphere args={[0.2]} position={[3.3, 3.1, 2.7]}>
+        <meshBasicMaterial color={"hotpink"} />
+      </Sphere>
       <pointLight
         intensity={2}
         decay={2}
-        distance={5}
+        distance={2.5}
         ref={pointLightRef3}
-        position={[-2, 4, 6.5]}
-        color={"hotpink"}
+        position={[-2, 3.5, 6.5]}
+        color={"lightBlue"}
       />
       <primitive object={shop.scene} />
     </>

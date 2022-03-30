@@ -45,22 +45,12 @@ const CanvasWrapper = () => {
 
   // animation
 
-  useFrame(({ camera }) => {
-    let cam = camera || null
-    if (cam) {
-      if (cam.position.x >= 2) {
-        cam.position.x -= 0.02
-      }
-      if (cam.position.x <= 2 && cam.position.z > 18) {
-        cam.position.z -= 0.1
-      }
-    }
-  })
+  useFrame(({ camera }) => {})
 
   console.log(mainCam.current)
   return (
     <>
-      <PerspectiveCamera ref={mainCam} makeDefault position={[10, 2, 30]} />
+      <PerspectiveCamera ref={mainCam} makeDefault position={[0, 2, 30]} />
       <OrbitControls />
       <ambientLight intensity={0.1} />
       <directionalLight

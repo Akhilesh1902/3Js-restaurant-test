@@ -1,4 +1,4 @@
-import { Box, Sphere } from "@react-three/drei"
+import { Box, ContactShadows, Sphere } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import React, { Suspense, useRef } from "react"
 
@@ -92,6 +92,7 @@ export default Lightings
 
 function LapmPost({ bulbPos, postPos, postDimension, color }) {
   const pointLight = useRef()
+  const bulb = useRef()
   //   useHelper(pointLight, PointLightHelper, 0.5, "yellow")
 
   const post = useRef()
@@ -99,10 +100,17 @@ function LapmPost({ bulbPos, postPos, postDimension, color }) {
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = 0.05
-    if (elapsedTime % 2 >= 1) {
-      pointLight.current.intensity += deltaTime
+    if (elapsedTime % 2 <= 0.2) {
+      pointLight.current.intensity = 0
+      bulb.current.color.set("#222b27")
     } else {
-      pointLight.current.intensity -= deltaTime
+      if (1 <= elapsedTime % 2 && elapsedTime % 2 <= 1.2) {
+        pointLight.current.intensity = 0
+        bulb.current.color.set("#222b27")
+      } else {
+        bulb.current.color.set("#4bfaa5")
+        pointLight.current.intensity = 1
+      }
     }
   })
 
@@ -118,7 +126,12 @@ function LapmPost({ bulbPos, postPos, postDimension, color }) {
       />
 
       <Sphere position={bulbPos} args={[0.33]}>
-        <meshBasicMaterial color={color} roughness={0.2} metalness={0.4} />
+        <meshBasicMaterial
+          ref={bulb}
+          color={color}
+          roughness={0.2}
+          metalness={0.4}
+        />
       </Sphere>
       <Box args={postDimension} position={postPos} ref={post}>
         <meshStandardMaterial color={"#1a0c01"} />
