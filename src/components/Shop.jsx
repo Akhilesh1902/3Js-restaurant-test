@@ -1,27 +1,16 @@
 import React, { useRef } from "react"
 import { useLoader } from "@react-three/fiber"
-import { Sphere, useHelper } from "@react-three/drei"
+import { Sphere } from "@react-three/drei"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
-import { PointLightHelper } from "three"
+// import { PointLightHelper } from "three"
 
 const Shop = () => {
-  const shop = useLoader(
-    GLTFLoader,
-    "/draco-Restaurant.glb",
-    (loader) => {
-      const dracoLoader = new DRACOLoader()
-      dracoLoader.setDecoderPath("/gltf/")
-      loader.setDRACOLoader(dracoLoader)
-      console.log(loader)
-    },
-    (porgress) => {
-      console.log(porgress)
-    },
-    (err) => {
-      console.log(err)
-    }
-  )
+  const shop = useLoader(GLTFLoader, "/draco-Restaurant.glb", (loader) => {
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath("/gltf/")
+    loader.setDRACOLoader(dracoLoader)
+  })
   //   shop.materials.WindowLightBlu.color.set(0, 0, 0)
   //   shop.materials.WindowLightPik.color.set(0, 0, 0)
   //   shop.materials.WindowLightPik.color = { r: 0, g: 0, b: 0 }

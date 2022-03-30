@@ -1,4 +1,4 @@
-import { Box, ContactShadows, Sphere } from "@react-three/drei"
+import { Box, Sphere } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import React, { Suspense, useRef } from "react"
 
@@ -99,7 +99,6 @@ function LapmPost({ bulbPos, postPos, postDimension, color }) {
 
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime()
-    const deltaTime = 0.05
     if (elapsedTime % 2 <= 0.2) {
       pointLight.current.intensity = 0
       bulb.current.color.set("#222b27")
